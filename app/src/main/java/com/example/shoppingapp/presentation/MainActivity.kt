@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showList(list: List<ShopItem>) {
+        llShopList.removeAllViews()
         for (shopItem in list) {
             val layoutId = if (shopItem.enabled) {
                 R.layout.item_shop_enabled
@@ -35,6 +36,10 @@ class MainActivity : AppCompatActivity() {
             val tvCount = view.findViewById<TextView>(R.id.tv_count)
             tvName.text = shopItem.name
             tvCount.text = shopItem.count.toString()
+            view.setOnLongClickListener{
+                viewModel.changeEnabledState(shopItem)
+                true
+            }
             llShopList.addView(view)
         }
     }

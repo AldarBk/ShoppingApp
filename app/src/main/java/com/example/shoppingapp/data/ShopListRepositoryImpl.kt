@@ -9,12 +9,13 @@ object ShopListRepositoryImpl : ShopListRepository {
 
     private val shopListLD = MutableLiveData<List<ShopItem>>()
 
-    private val shopList = mutableListOf<ShopItem>()
+    private val shopList = sortedSetOf<ShopItem>({ p1, p2 -> p1.id.compareTo(p2.id) })
+
     private var autoIncrementId = 0
 
     init {
-        for (i in 0 until 10){
-            val item = ShopItem("Name $i",i,true)
+        for (i in 0 until 100){
+            val item = ShopItem("Name $i",i, true)
             addShopItem(item)
         }
     }
@@ -34,7 +35,7 @@ object ShopListRepositoryImpl : ShopListRepository {
 
     override fun getShopItem(shopItemId: Int): ShopItem {
         return shopList.find { it.id == shopItemId }
-            ?: throw java.lang.RuntimeException("Element with id $shopItemId not found")
+            ?: throw RuntimeException("Element with id $shopItemId not found")
     }
 
     override fun editShopItem(shopItem: ShopItem) {
