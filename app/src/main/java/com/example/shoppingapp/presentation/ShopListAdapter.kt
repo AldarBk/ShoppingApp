@@ -45,7 +45,12 @@ class ShopListAdapter : RecyclerView.Adapter<ShopListAdapter.ShopItemViewHolder>
         } else {
             viewHolder.tvName.text = ""
             viewHolder.tvCount.text = ""
-            viewHolder.tvName.setTextColor(ContextCompat.getColor(viewHolder.view.context, android.R.color.white))
+            viewHolder.tvName.setTextColor(
+                ContextCompat.getColor(
+                    viewHolder.view.context,
+                    android.R.color.white
+                )
+            )
         }
     }
 
