@@ -6,4 +6,5 @@ class AddShopItemUseCase(private val shopListRepository: ShopListRepository) {
         shopListRepository.addShopItem(shopItem)
 
     }
+
 }
