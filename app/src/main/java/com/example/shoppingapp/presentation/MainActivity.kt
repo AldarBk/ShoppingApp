@@ -21,11 +21,20 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupRecyclerView(){
+    private fun setupRecyclerView() {
         val rvShopList = findViewById<RecyclerView>(R.id.rv_shop_list)
-        adapter = ShopListAdapter()
-        rvShopList.adapter = adapter
-
+        with(rvShopList) {
+            adapter = ShopListAdapter()
+            adapter = adapter
+            recycledViewPool.setMaxRecycledViews(
+                ShopListAdapter.VIEW_IS_ENABLED,
+                ShopListAdapter.MAX_POOL_SIZE
+            )
+            recycledViewPool.setMaxRecycledViews(
+                ShopListAdapter.VIEW_IS_DISABLED,
+                ShopListAdapter.MAX_POOL_SIZE
+            )
+        }
     }
 
 }
