@@ -16,7 +16,11 @@ import com.example.shoppingapp.R
 import com.example.shoppingapp.domain.ShopItem
 import com.google.android.material.textfield.TextInputLayout
 
-class ShopItemFragment : Fragment() {
+class ShopItemFragment(
+    private val screenMode: String = MODE_UNKNOWN,
+    private val shopItemId: Int = ShopItem.UNDEFINED_ID
+
+) : Fragment() {
 
     private lateinit var viewModel: ShopItemViewModel
 
@@ -27,10 +31,6 @@ class ShopItemFragment : Fragment() {
     private lateinit var buttonSave: Button
 
 
-    private var screenMode = MODE_UNKNOWN
-    private var shopItemId = ShopItem.UNDEFINED_ID
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -39,7 +39,7 @@ class ShopItemFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        parseIntent()
+        parseParams()
         viewModel = ViewModelProvider(this)[ShopItemViewModel::class.java]
         initViews(view)
         addTextChangeListener()
@@ -67,7 +67,7 @@ class ShopItemFragment : Fragment() {
             tilName.error = message
         }
         viewModel.shouldCloseScreen.observe(viewLifecycleOwner) {
-            //Some code
+            activity?.onBackPressedDispatcher
         }
     }
 
@@ -122,7 +122,7 @@ class ShopItemFragment : Fragment() {
         }
     }
 
-    private fun parseIntent() {
+    private fun parseParams() {
         if (screenMode != MODE_EDIT && screenMode != MODE_ADD) {
             throw RuntimeException("Unknown screen mode $screenMode")
         }
@@ -148,6 +148,14 @@ class ShopItemFragment : Fragment() {
         private const val MODE_EDIT = "mode_edit"
         private const val MODE_ADD = "mode_add"
         private const val MODE_UNKNOWN = ""
+
+        fun newInstanceAddItem(): ShopItemFragment {
+            return ShopItemFragment(MODE_ADD)
+        }
+
+        fun newInstanceEditItem(shopItemId: Int): ShopItemFragment {
+            return ShopItemFragment(MODE_EDIT, shopItemId)
+        }
 
 
         fun newIntentAddItem(context: Context): Intent {
