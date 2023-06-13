@@ -163,4 +163,8 @@ class ShopItemActivity : AppCompatActivity() {
         }
 
     }
+
+    private fun pay(){
+        TODO()
+    }
 }
