@@ -161,11 +161,11 @@ class ShopItemFragment() : Fragment() {
         private const val MODE_UNKNOWN = ""
 
         fun newInstanceAddItem(): ShopItemFragment {
-            return ShopItemFragment().apply {
-                arguments = Bundle().apply {
-                    putString(SCREEN_MODE, SHOP_ITEM_ID)
-                }
-            }
+           return ShopItemFragment().apply {
+               arguments = Bundle().apply {
+                   putString(SCREEN_MODE, MODE_ADD)
+               }
+           }
         }
 
         fun newInstanceEditItem(shopItemId: Int): ShopItemFragment {
